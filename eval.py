@@ -153,7 +153,7 @@ def x8_forward(img, model, precision='single'):
 
     return output
     
-def chop_forward(x, model, scale, shave=16, min_size=20000, nGPUs=opt.gpus):
+def chop_forward(x, model, scale, shave=16, min_size=10000, nGPUs=opt.gpus):
     b, c, h, w = x.size()
     h_half, w_half = h // 2, w // 2
     h_size, w_size = h_half + shave, w_half + shave
