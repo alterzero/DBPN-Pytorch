@@ -103,12 +103,6 @@ def eval():
         save_img(prediction.cpu().data, name[0])
 
 def save_img(img, img_name):
-    # img.clamp(0, 1)
-    #if list(img.shape)[0] == 3:
-    #    save_img = img*255.0
-    #    save_img = save_img.clamp(0, 255).numpy().transpose(1, 2, 0).astype(np.uint8)
-    #    # img = (((img - img.min()) * 255) / (img.max() - img.min())).numpy().transpose(1, 2, 0).astype(np.uint8)
-    #else:
     save_img = img.squeeze().clamp(0, 1).numpy().transpose(1,2,0)
 
     # save img
