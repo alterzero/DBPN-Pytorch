@@ -33,7 +33,7 @@ parser.add_argument('--input_dir', type=str, default='Input')
 parser.add_argument('--output', default='Results/', help='Location to save checkpoint models')
 parser.add_argument('--test_dataset', type=str, default='DIV2K_valid_LR_x8')
 parser.add_argument('--model_type', type=str, default='DBPNLL')
-parser.add_argument('--model', default='final/NTIRE2018_x8.pth', help='sr pretrained base model')
+parser.add_argument('--model', default='models/NTIRE2018_x8.pth', help='sr pretrained base model')
 
 opt = parser.parse_args()
 
