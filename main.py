@@ -10,9 +10,7 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from dbpn import Net as DBPN
 from dbpn_v1 import Net as DBPNLL
-from dbpn_v2 import Net as DBPNLLL
 from dbpns import Net as DBPNS
-from dbpn_resnet import Net as DBPNRES
 from data import get_training_set, get_test_set
 import pdb
 import socket
@@ -111,24 +109,8 @@ training_data_loader = DataLoader(dataset=train_set, num_workers=opt.threads, ba
 #testing_data_loader = DataLoader(dataset=test_set, num_workers=opt.threads, batch_size=opt.testBatchSize, shuffle=False)
 
 print('===> Building model ', opt.model_type)
-if opt.model_type == 'DBPNS':
-    model = DBPNS(num_channels=3, base_filter=32,  feat = 128, num_stages=2, scale_factor=opt.upscale_factor) ###DBPN-S
-elif opt.model_type == 'DBPN128':
-    model = DBPN(num_channels=3, base_filter=32,  feat = 128, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPN128
-elif opt.model_type == 'DBPNRES':
-    model = DBPNRES(num_channels=3, base_filter=64,  n_resblock = 3, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPN128
-elif opt.model_type == 'DeepDBPNRES':
-    model = DBPNRES(num_channels=3, base_filter=64, feat=64, n_resblock = 10, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPN128
-elif opt.model_type == 'VeryDeepDBPNRES':
-    model = DBPNRES(num_channels=3, base_filter=256,feat=64,  n_resblock = 4, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPN128
-elif opt.model_type == 'DBPN96':
-    model = DBPN(num_channels=3, base_filter=96,  feat = 256, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPN
-elif opt.model_type == 'DBPNLL':
-    model = DBPNLL(num_channels=3, base_filter=64,  feat = 256, num_stages=10, scale_factor=opt.upscale_factor) ###D-DBPN
-elif opt.model_type == 'DBPNLLL':
-    model = DBPNLLL(num_channels=3, base_filter=64,  feat = 256, num_stages=12, scale_factor=opt.upscale_factor) ###D-DBPN
-elif opt.model_type == 'DBPN32':
-    model = DBPN(num_channels=3, base_filter=32,  feat = 128, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPN
+if opt.model_type == 'DBPNLL':
+    model = DBPNLL(num_channels=3, base_filter=64,  feat = 256, num_stages=10, scale_factor=opt.upscale_factor) ###For NTIRE2018
 else:
     model = DBPN(num_channels=3, base_filter=64,  feat = 256, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPN
     
