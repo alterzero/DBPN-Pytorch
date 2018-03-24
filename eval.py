@@ -9,8 +9,6 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from dbpn import Net as DBPN
 from dbpn_v1 import Net as DBPNLL
-from dbpns import Net as DBPNS
-from dbpn_resnet import Net as DBPNRES
 from data import get_eval_set
 from functools import reduce
 
@@ -53,22 +51,8 @@ test_set = get_eval_set(os.path.join(opt.input_dir,opt.test_dataset))
 testing_data_loader = DataLoader(dataset=test_set, num_workers=opt.threads, batch_size=opt.testBatchSize, shuffle=False)
 
 print('===> Building model')
-if opt.model_type == 'DBPNS':
-    model = DBPNS(num_channels=3, base_filter=32,  feat = 128, num_stages=2, scale_factor=opt.upscale_factor) ###DBPN-S
-elif opt.model_type == 'DBPN128':
-    model = DBPN(num_channels=3, base_filter=32,  feat = 128, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPN128
-elif opt.model_type == 'DBPNRES':
-    model = DBPNRES(num_channels=3, base_filter=64,  n_resblock = 2, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPNRES
-elif opt.model_type == 'DeepDBPNRES':
-    model = DBPNRES(num_channels=3, base_filter=64,feat=64, n_resblock = 10, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPN128
-elif opt.model_type == 'VeryDeepDBPNRES':
-    model = DBPNRES(num_channels=3, base_filter=256,feat=64,  n_resblock = 10, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPN128
-elif opt.model_type == 'DBPNLL':
-    model = DBPNLL(num_channels=3, base_filter=64,  feat = 256, num_stages=10, scale_factor=opt.upscale_factor) ###D-DBPN
-elif opt.model_type == 'DBPN96':
-    model = DBPN(num_channels=3, base_filter=96,  feat = 256, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPN
-elif opt.model_type == 'DBPN32':
-    model = DBPN(num_channels=3, base_filter=32,  feat = 128, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPN
+if opt.model_type == 'DBPNLL':
+    model = DBPNLL(num_channels=3, base_filter=64,  feat = 256, num_stages=10, scale_factor=opt.upscale_factor) ##For NTIRE2018
 else:
     model = DBPN(num_channels=3, base_filter=64,  feat = 256, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPN
 
@@ -112,9 +96,9 @@ def save_img(img, img_name):
         
     save_fn = save_dir +'/'+ img_name
     cv2.imwrite(save_fn, cv2.cvtColor(save_img*255, cv2.COLOR_BGR2RGB),  [cv2.IMWRITE_PNG_COMPRESSION, 0])
-    #imsave(save_fn, save_img)
-    #sio.savemat(save_fn+'.mat', {'img':save_img})
 
+#####x8_forward and chop_forward taken from https://github.com/thstkdgus35/EDSR-PyTorch
+#####EDSR and MDSR Team from SNU
 def x8_forward(img, model, precision='single'):
     def _transform(v, op):
         if precision != 'single': v = v.float()
