@@ -16,13 +16,13 @@ It contains 4 files:
 
 #Training
 
-    ```python
+    ```python3
     main.py
     ```
 
 #Testing
 
-    ```python
+    ```python3
     eval.py
     ```
 
