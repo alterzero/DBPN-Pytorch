@@ -16,14 +16,14 @@ HOW TO
 
 #Training
 
-    ```bash
-    python main.py
+    ```python
+    main.py
     ```
 
 #Testing
 
-    ```bash
-    python eval.py
+    ```python
+    eval.py
     ```
 
 ![DBPN](http://www.toyota-ti.ac.jp/Lab/Denshi/iim/members/muhammad.haris/projects/DBPN.png)
