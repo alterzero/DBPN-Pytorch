@@ -10,9 +10,7 @@ It contains 4 files:
 (4) NTIRE2018_x8.pth is used for NTIRE2018 competition (Track 1: Classic Bicubic x8)
 
 
-HOW TO
-
-----------------
+##########HOW TO##########
 
 #Training
 
