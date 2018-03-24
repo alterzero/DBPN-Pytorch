@@ -16,13 +16,13 @@ HOW TO
 
 #Training
 
-    ```
+    ```bash
     python main.py
     ```
 
 #Testing
 
-    ```
+    ```bash
     python eval.py
     ```
 
