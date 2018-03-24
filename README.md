@@ -11,13 +11,20 @@ It contains 4 files:
 
 
 HOW TO
-#############
 
-Training
-python main.py
+----------------
 
-Testing
-python eval.py
+#Training
+
+    ```
+    python main.py
+    ```
+
+#Testing
+
+    ```
+    python eval.py
+    ```
 
 ![DBPN](http://www.toyota-ti.ac.jp/Lab/Denshi/iim/members/muhammad.haris/projects/DBPN.png)
 
