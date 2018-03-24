@@ -12,6 +12,7 @@ It contains 4 files:
 
 HOW TO
 #############
+
 Training
 python main.py
 
