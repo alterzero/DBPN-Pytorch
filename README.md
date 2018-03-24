@@ -11,6 +11,7 @@ It contains 4 files:
 
 (4) NTIRE2018_x8.pth is used for NTIRE2018 competition (Track 1: Classic Bicubic x8)
 
+We also provide original [Caffe implementation](https://github.com/alterzero/DBPN-caffe)
 
 ##########HOW TO##########
 
@@ -27,4 +28,3 @@ It contains 4 files:
     ```
 
 ![DBPN](http://www.toyota-ti.ac.jp/Lab/Denshi/iim/members/muhammad.haris/projects/DBPN.png)
-
