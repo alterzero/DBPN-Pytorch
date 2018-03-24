@@ -7,7 +7,8 @@ Pretrained models can be downloaded from this link!
 https://drive.google.com/drive/folders/1ahbeoEHkjxoo4NV1wReOmpoRWbl448z-?usp=sharing
 
 It contains 4 files:
-(1) DBPN_x2.pth, (2) DBPN_x4.pth, (3) DBPN_x8.pth is from the original architecture which explained in the CVPR2018 manuscript.
+(1) DBPN_x2.pth, (2) DBPN_x4.pth, (3) DBPN_x8.pth are from the original architecture (CVPR2018).
+
 (4) NTIRE2018_x8.pth is used for NTIRE2018 competition (Track 1: Classic Bicubic x8)
 
 
