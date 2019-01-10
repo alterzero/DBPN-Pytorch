@@ -43,6 +43,9 @@ We also provide original [Caffe implementation](https://github.com/alterzero/DBP
 
 ![DBPN](http://www.toyota-ti.ac.jp/Lab/Denshi/iim/members/muhammad.haris/projects/DBPN.png)
 
+# Update log
+* Jan 10, 2018 -> Add model used for PIRM2018, and support Pytorch >= 1.0.0
+
 ## Citations
 If you find this work useful, please consider citing it.
 ```
