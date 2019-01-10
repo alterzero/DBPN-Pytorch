@@ -1,5 +1,5 @@
 # Update log
-* Jan 10, 2019 -> Add model used for PIRM2018, and support Pytorch >= 1.0.0
+* Jan 10, 2019 -> Added model used for PIRM2018, and support Pytorch >= 1.0.0
 
 # Deep Back-Projection Networks for Super-Resolution (CVPR2018)
 
