@@ -6,12 +6,14 @@ import os
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import torch.backends.cudnn as cudnn
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from dbpn import Net as DBPN
 from dbpn_v1 import Net as DBPNLL
 from dbpns import Net as DBPNS
-from data import get_training_set, get_test_set
+#from dbpn_iterative import Net as DBPNITER
+from data import get_training_set
 import pdb
 import socket
 import time
@@ -19,51 +21,56 @@ import time
 # Training settings
 parser = argparse.ArgumentParser(description='PyTorch Super Res Example')
 parser.add_argument('--upscale_factor', type=int, default=8, help="super resolution upscale factor")
-parser.add_argument('--batchSize', type=int, default=16, help='training batch size')
-parser.add_argument('--testBatchSize', type=int, default=5, help='testing batch size')
+parser.add_argument('--batchSize', type=int, default=1, help='training batch size')
 parser.add_argument('--nEpochs', type=int, default=2000, help='number of epochs to train for')
-parser.add_argument('--snapshots', type=int, default=100, help='Snapshots')
+parser.add_argument('--snapshots', type=int, default=50, help='Snapshots')
+parser.add_argument('--start_iter', type=int, default=1, help='Starting Epoch')
 parser.add_argument('--lr', type=float, default=1e-4, help='Learning Rate. Default=0.01')
 parser.add_argument('--gpu_mode', type=bool, default=True)
-parser.add_argument('--threads', type=int, default=10, help='number of threads for data loader to use')
+parser.add_argument('--threads', type=int, default=1, help='number of threads for data loader to use')
 parser.add_argument('--seed', type=int, default=123, help='random seed to use. Default=123')
-parser.add_argument('--gpus', default=4, type=float, help='number of gpu')
+parser.add_argument('--gpus', default=1, type=int, help='number of gpu')
 parser.add_argument('--data_dir', type=str, default='./Dataset')
 parser.add_argument('--data_augmentation', type=bool, default=True)
-parser.add_argument('--hr_train_dataset', type=str, default='DIV2K_HR_aug')
-parser.add_argument('--train_dataset', type=str, default='DIV2K_LR_aug_x8')
-parser.add_argument('--hr_test_dataset', type=str, default='Set5')
-parser.add_argument('--test_dataset', type=str, default='Set5_LR_x4')
-parser.add_argument('--model_type', type=str, default='DBPN')
-parser.add_argument('--patch_size', type=int, default=32, help='Size of cropped HR image')
-parser.add_argument('--pretrained_sr', default=None, help='sr pretrained base model')
+parser.add_argument('--hr_train_dataset', type=str, default='DIV2K_train_HR')
+parser.add_argument('--model_type', type=str, default='DBPNLL')
+parser.add_argument('--residual', type=bool, default=True)
+parser.add_argument('--patch_size', type=int, default=40, help='Size of cropped HR image')
+parser.add_argument('--pretrained_sr', default='MIX2K_LR_aug_x4dl10DBPNITERtpami_epoch_399.pth', help='sr pretrained base model')
 parser.add_argument('--pretrained', type=bool, default=False)
 parser.add_argument('--save_folder', default='weights/', help='Location to save checkpoint models')
-parser.add_argument('--prefix', default='dbpn', help='Location to save checkpoint models')
+parser.add_argument('--prefix', default='tpami_residual_filter8', help='Location to save checkpoint models')
 
 opt = parser.parse_args()
 gpus_list = range(opt.gpus)
 hostname = str(socket.gethostname())
+cudnn.benchmark = True
 print(opt)
 
 def train(epoch):
     epoch_loss = 0
     model.train()
     for iteration, batch in enumerate(training_data_loader, 1):
-        input, target = Variable(batch[0]), Variable(batch[1])
+        input, target, bicubic = Variable(batch[0]), Variable(batch[1]), Variable(batch[2])
         if cuda:
             input = input.cuda(gpus_list[0])
             target = target.cuda(gpus_list[0])
+            bicubic = bicubic.cuda(gpus_list[0])
 
         optimizer.zero_grad()
         t0 = time.time()
-        loss = criterion(model(input), target)
+        prediction = model(input)
+
+        if opt.residual:
+            prediction = prediction + bicubic
+
+        loss = criterion(prediction, target)
         t1 = time.time()
-        epoch_loss += loss.data[0]
+        epoch_loss += loss.data
         loss.backward()
         optimizer.step()
 
-        print("===> Epoch[{}]({}/{}): Loss: {:.4f} || Timer: {:.4f} sec.".format(epoch, iteration, len(training_data_loader), loss.data[0], (t1 - t0)))
+        print("===> Epoch[{}]({}/{}): Loss: {:.4f} || Timer: {:.4f} sec.".format(epoch, iteration, len(training_data_loader), loss.data, (t1 - t0)))
 
     print("===> Epoch {} Complete: Avg. Loss: {:.4f}".format(epoch, epoch_loss / len(training_data_loader)))
 
@@ -103,16 +110,16 @@ if cuda:
     torch.cuda.manual_seed(opt.seed)
 
 print('===> Loading datasets')
-train_set = get_training_set(opt.data_dir, opt.train_dataset, opt.hr_train_dataset, opt.upscale_factor, opt.patch_size, opt.data_augmentation)
-#test_set = get_test_set(opt.data_dir, opt.test_dataset, opt.hr_test_dataset, opt.upscale_factor, opt.patch_size)
+train_set = get_training_set(opt.data_dir, opt.hr_train_dataset, opt.upscale_factor, opt.patch_size, opt.data_augmentation)
 training_data_loader = DataLoader(dataset=train_set, num_workers=opt.threads, batch_size=opt.batchSize, shuffle=True)
-#testing_data_loader = DataLoader(dataset=test_set, num_workers=opt.threads, batch_size=opt.testBatchSize, shuffle=False)
 
 print('===> Building model ', opt.model_type)
 if opt.model_type == 'DBPNLL':
-    model = DBPNLL(num_channels=3, base_filter=64,  feat = 256, num_stages=10, scale_factor=opt.upscale_factor) ###For NTIRE2018
+    model = DBPNLL(num_channels=3, base_filter=64,  feat = 256, num_stages=10, scale_factor=opt.upscale_factor) 
+#elif opt.model_type == 'DBPN-RES-MR64-3':
+#    model = DBPNITER(num_channels=3, base_filter=64,  feat = 256, num_stages=3, scale_factor=opt.upscale_factor)
 else:
-    model = DBPN(num_channels=3, base_filter=64,  feat = 256, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPN
+    model = DBPN(num_channels=3, base_filter=64,  feat = 256, num_stages=7, scale_factor=opt.upscale_factor) 
     
 model = torch.nn.DataParallel(model, device_ids=gpus_list)
 criterion = nn.L1Loss()
@@ -134,9 +141,8 @@ if cuda:
 
 optimizer = optim.Adam(model.parameters(), lr=opt.lr, betas=(0.9, 0.999), eps=1e-8)
 
-for epoch in range(1, opt.nEpochs + 1):
+for epoch in range(opt.start_iter, opt.nEpochs + 1):
     train(epoch)
-    #test()
 
     # learning rate is decayed by a factor of 10 every half of total epochs
     if (epoch+1) % (opt.nEpochs/2) == 0:

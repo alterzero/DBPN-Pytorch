@@ -34,11 +34,11 @@ class Net(nn.Module):
         for m in self.modules():
             classname = m.__class__.__name__
             if classname.find('Conv2d') != -1:
-        	    torch.nn.init.kaiming_normal(m.weight)
+        	    torch.nn.init.kaiming_normal_(m.weight)
         	    if m.bias is not None:
         		    m.bias.data.zero_()
             elif classname.find('ConvTranspose2d') != -1:
-        	    torch.nn.init.kaiming_normal(m.weight)
+        	    torch.nn.init.kaiming_normal_(m.weight)
         	    if m.bias is not None:
         		    m.bias.data.zero_()
             
