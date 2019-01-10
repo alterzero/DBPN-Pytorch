@@ -10,7 +10,7 @@ Pretrained models (DBPNLL) can be downloaded from this link!
 https://drive.google.com/drive/folders/1ahbeoEHkjxoo4NV1wReOmpoRWbl448z-?usp=sharing
 
 ## Dependencies
-* Python 3.6
+* Python 3.5
 * PyTorch >= 1.0.0
 
 We also provide original [Caffe implementation](https://github.com/alterzero/DBPN-caffe)
