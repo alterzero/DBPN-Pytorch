@@ -1,3 +1,6 @@
+# Update log
+* Jan 10, 2019 -> Add model used for PIRM2018, and support Pytorch >= 1.0.0
+
 # Deep Back-Projection Networks for Super-Resolution (CVPR2018)
 
 ## Winner (1st) of [NTIRE2018](http://openaccess.thecvf.com/content_cvpr_2018_workshops/papers/w13/Timofte_NTIRE_2018_Challenge_CVPR_2018_paper.pdf) Competition (Track: x8 Bicubic Downsampling)
@@ -42,9 +45,6 @@ We also provide original [Caffe implementation](https://github.com/alterzero/DBP
     ```
 
 ![DBPN](http://www.toyota-ti.ac.jp/Lab/Denshi/iim/members/muhammad.haris/projects/DBPN.png)
-
-# Update log
-* Jan 10, 2018 -> Add model used for PIRM2018, and support Pytorch >= 1.0.0
 
 ## Citations
 If you find this work useful, please consider citing it.
