@@ -27,7 +27,7 @@ parser.add_argument('--upscale_factor', type=int, default=4, help="super resolut
 parser.add_argument('--testBatchSize', type=int, default=1, help='testing batch size')
 parser.add_argument('--gpu_mode', type=bool, default=True)
 parser.add_argument('--self_ensemble', type=bool, default=False)
-parser.add_argument('--chop_forward', type=bool, default=True)
+parser.add_argument('--chop_forward', type=bool, default=False)
 parser.add_argument('--threads', type=int, default=1, help='number of threads for data loader to use')
 parser.add_argument('--seed', type=int, default=123, help='random seed to use. Default=123')
 parser.add_argument('--gpus', default=1, type=int, help='number of gpu')
@@ -86,12 +86,15 @@ def eval():
 
         t0 = time.time()
         if opt.chop_forward:
-            prediction = chop_forward(input, model, opt.upscale_factor)
+            with torch.no_grad():
+                prediction = chop_forward(input, model, opt.upscale_factor)
         else:
             if opt.self_ensemble:
-                prediction = x8_forward(input, model)
+                with torch.no_grad():
+                    prediction = x8_forward(input, model)
             else:
-                prediction = model(input)
+                with torch.no_grad():
+                    prediction = model(input)
         t1 = time.time()
         print("===> Processing: %s || Timer: %.4f sec." % (name[0], (t1 - t0)))
         prediction = utils.denorm(prediction.data[0],vgg=True)
