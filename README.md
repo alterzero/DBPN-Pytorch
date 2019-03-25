@@ -1,5 +1,6 @@
-# Update log
+# NEWS
 * Jan 10, 2019 -> Added model used for PIRM2018, and support Pytorch >= 1.0.0
+* Mar 25, 2019 -> New paper on Video Super-Resolution [RBPN](https://github.com/alterzero/RBPN-PyTorch)
 
 # Deep Back-Projection Networks for Super-Resolution (CVPR2018)
 
