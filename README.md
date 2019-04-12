@@ -1,7 +1,7 @@
 # NEWS
 * Jan 10, 2019 -> Added model used for PIRM2018, and support Pytorch >= 1.0.0
 * Mar 25, 2019 -> New paper on Video Super-Resolution [RBPN](https://github.com/alterzero/RBPN-PyTorch)
-* Apr 12, 2019 -> Added [Extension of DBPN](href="https://arxiv.org/abs/1904.05677) paper and model. 
+* Apr 12, 2019 -> Added [Extension of DBPN](https://arxiv.org/abs/1904.05677) paper and model. 
 
 # Deep Back-Projection Networks for Super-Resolution (CVPR2018)
 
@@ -25,7 +25,7 @@ https://drive.google.com/drive/folders/1ahbeoEHkjxoo4NV1wReOmpoRWbl448z-?usp=sha
 1. DBPN -> use T = 7
 2. DBPNLL -> use T = 10
 3. PIRM Model -> DBPNLL with adversarial loss
-4. DBPN-RES-MR64-3 -> [improvement of DBPN](href="https://arxiv.org/abs/1904.05677) with recurrent process + residual learning
+4. DBPN-RES-MR64-3 -> [improvement of DBPN](https://arxiv.org/abs/1904.05677) with recurrent process + residual learning
 
 ##########HOW TO##########
 
