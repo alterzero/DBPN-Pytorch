@@ -22,10 +22,10 @@ https://drive.google.com/drive/folders/1ahbeoEHkjxoo4NV1wReOmpoRWbl448z-?usp=sha
 * PyTorch >= 1.0.0
 
 ## Model types
-1. DBPN -> use T = 7
-2. DBPNLL -> use T = 10
-3. PIRM Model -> DBPNLL with adversarial loss
-4. DBPN-RES-MR64-3 -> [improvement of DBPN](https://arxiv.org/abs/1904.05677) with recurrent process + residual learning
+1. "DBPN" -> use T = 7
+2. "DBPNLL" -> use T = 10
+3. PIRM Model -> "DBPNLL" with adversarial loss
+4. "DBPN-RES-MR64-3" -> [improvement of DBPN](https://arxiv.org/abs/1904.05677) with recurrent process + residual learning
 
 ##########HOW TO##########
 
