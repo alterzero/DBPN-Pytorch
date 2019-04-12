@@ -9,7 +9,7 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from dbpn import Net as DBPN
 from dbpn_v1 import Net as DBPNLL
-#from dbpn_iterative import Net as DBPNITER
+from dbpn_iterative import Net as DBPNITER
 from data import get_eval_set
 from functools import reduce
 
@@ -55,8 +55,8 @@ testing_data_loader = DataLoader(dataset=test_set, num_workers=opt.threads, batc
 print('===> Building model')
 if opt.model_type == 'DBPNLL':
     model = DBPNLL(num_channels=3, base_filter=64,  feat = 256, num_stages=10, scale_factor=opt.upscale_factor) ###D-DBPN
-#elif opt.model_type == 'DBPN-RES-MR64-3':
-#    model = DBPNITER(num_channels=3, base_filter=64,  feat = 256, num_stages=3, scale_factor=opt.upscale_factor) ###D-DBPN
+elif opt.model_type == 'DBPN-RES-MR64-3':
+    model = DBPNITER(num_channels=3, base_filter=64,  feat = 256, num_stages=3, scale_factor=opt.upscale_factor) ###D-DBPN
 else:
     model = DBPN(num_channels=3, base_filter=64,  feat = 256, num_stages=7, scale_factor=opt.upscale_factor) ###D-DBPN
     

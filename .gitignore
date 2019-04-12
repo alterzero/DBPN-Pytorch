@@ -1,7 +1,3 @@
 
 .DS_Store
-models/DBPN-RES-MR64-3_2x.pth
-models/DBPN-RES-MR64-3_4x.pth
-models/DBPN-RES-MR64-3_8x.pth
-dbpn_iterative.py
 models/DBPNLL_x8.pth
