@@ -69,7 +69,7 @@ If you find this work useful, please consider citing it.
 @article{DBPN2019,
   title={Deep Back-Projection Networks for Single Imaage Super-Resolution},
   author={Haris, Muhammad and Shakhnarovich, Greg and Ukita, Norimichi},
-  journal={arXiv preprint arXiv:1803.11316},
+  journal={arXiv preprint arXiv:1904.05677},
   year={2019}
 }
 
