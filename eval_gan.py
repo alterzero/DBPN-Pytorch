@@ -95,8 +95,8 @@ def eval():
                     prediction = model(input)
         t1 = time.time()
         print("===> Processing: %s || Timer: %.4f sec." % (name[0], (t1 - t0)))
-        prediction = utils.denorm(prediction.data[0],vgg=True)
-        save_img(prediction.cpu(), name[0])
+        prediction = utils.denorm(prediction.data[0].cpu(),vgg=True)
+        save_img(prediction, name[0])
 
 def save_img(img, img_name):
     save_img = img.squeeze().clamp(0, 1).numpy().transpose(1,2,0)
