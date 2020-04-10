@@ -1,6 +1,7 @@
 # NEWS
+* Apr 1, 2020 -> NEW paper on Space-Time Super-Resolution [STARnet](https://github.com/alterzero/STARnet) (to appear in CVPR2020)
 * Jan 10, 2019 -> Added model used for PIRM2018, and support Pytorch >= 1.0.0
-* Mar 25, 2019 -> NEW paper on Video Super-Resolution [RBPN](https://github.com/alterzero/RBPN-PyTorch) (to appear in CVPR2019)
+* Mar 25, 2019 -> Paper on Video Super-Resolution [RBPN](https://github.com/alterzero/RBPN-PyTorch) (CVPR2019)
 * Apr 12, 2019 -> Added [Extension of DBPN](https://arxiv.org/abs/1904.05677) paper and model. 
 
 # Deep Back-Projection Networks for Super-Resolution (CVPR2018)
